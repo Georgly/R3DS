@@ -1,6 +1,5 @@
 #include "model.h"
 #include <QFile>
-#include <QTextStream>
 #include <QDebug>
 
 
@@ -69,9 +68,9 @@
         for (int iterator = 0 ; iterator < vertexModel.count() ; iterator++)
         {
             Vertex *vertex = vertexModel.data();
-            writeStream << "v " + QString :: number(vertex[iterator].x)
-                    + " " + QString :: number(vertex[iterator].y)
-                    + " " + QString :: number(vertex[iterator].z) + "\n";
+            writeStream << "v " + QString :: number(vertex[iterator].vector[0])
+                    + " " + QString :: number(vertex[iterator].vector[1])
+                    + " " + QString :: number(vertex[iterator].vector[2]) + "\n";
         }
         for (int iterator = 0 ; iterator < faceModel.count() ; iterator++)
         {

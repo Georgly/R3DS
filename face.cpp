@@ -1,6 +1,11 @@
 #include "face.h"
 
 
+Face :: Face()
+{
+
+}
+
 bool Face :: addFace(QStringList indexes,
                      int maxVertexIndex, int maxTextureCoorIndex, int maxNormalVectorIndex, QString& errorStr)
 {

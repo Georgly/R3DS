@@ -27,22 +27,24 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     vertex.cpp \
-    face.cpp \
-    normalvector.cpp \
     texturecoord.cpp \
-    model.cpp \
     matrix4x4.cpp \
-    matrixtest.cpp
+    modelview.cpp \
+    vector3.cpp \
+    model.cpp \
+    face.cpp \
+    normalvector.cpp
 
 HEADERS += \
         mainwindow.h \
     vertex.h \
-    face.h \
-    normalvector.h \
     texturecoord.h \
-    model.h \
     matrix4x4.h \
-    matrixtest.h
+    modelview.h \
+    vector3.h \
+    model.h \
+    face.h \
+    normalvector.h
 
 FORMS += \
         mainwindow.ui
