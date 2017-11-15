@@ -209,3 +209,10 @@ QString Model :: parseFIle(QString fileName)
         return true;
     }
 
+//    void Model :: createModel(Matrix4x4 transformMatrix)
+//    {
+//        for (int iterator = 0; iterator < vertexModel.count(); iterator++ )
+//        {
+//            vertexModel[iterator] = Matrix4x4::multipleMatrixVertex( transformMatrix, vertexModel[iterator] );
+//        }
+//    }

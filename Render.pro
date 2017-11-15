@@ -33,7 +33,9 @@ SOURCES += \
     vector3.cpp \
     model.cpp \
     face.cpp \
-    normalvector.cpp
+    normalvector.cpp \
+    camera.cpp \
+    testmatrix.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +46,9 @@ HEADERS += \
     vector3.h \
     model.h \
     face.h \
-    normalvector.h
+    normalvector.h \
+    camera.h \
+    testmatrix.h
 
 FORMS += \
         mainwindow.ui

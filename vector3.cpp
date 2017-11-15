@@ -29,9 +29,10 @@ Vertex Vector3 :: Cross(Vertex v1, Vertex v2)
 
 Vertex Vector3 :: Normalize(Vertex v)
 {
-    Vertex *result = new Vertex((float)(v.vector[0] / Vector3::Length(v)),
-            (float)(v.vector[1] / Vector3::Length(v)),
-            (float)(v.vector[2] / Vector3::Length(v)));
+    float length = Vector3::Length(v);
+    Vertex *result = new Vertex((float)(v.vector[0] / length),
+            (float)(v.vector[1] / length),
+            (float)(v.vector[2] / length));
     return  *result;
 }
 

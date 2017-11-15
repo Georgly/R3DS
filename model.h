@@ -4,25 +4,28 @@
 #include "vertex.h"
 #include "normalvector.h"
 #include "texturecoord.h"
+#include "matrix4x4.h"
 #include <QVector>
 #include <QTextStream>
 #include <QMessageBox>
 
 class Model
 {
-private:
+public:
     QVector<Vertex> vertexModel;
     QVector<NormalVector> normalVectorModel;
     QVector<TextureCoord> textureCoordModel;
     QVector<Face> faceModel;
     QVector<QString> fileStrList;
 
-public:
+    Vertex *position = new Vertex();
+    Vertex *rotation = new Vertex();
     Model();
     QString importModel(QString fileName);
     QString importModel(QTextStream& fileName);
     void exportModel();
     /*QTextStream**/QString parseFIle(QString fileName);
+    //void createModel(Matrix4x4 transformMatrix);
 
 private:
     QString faceToString(Face face);

@@ -3,10 +3,6 @@
 
 Vertex :: Vertex ()
     {
-//        x = 0;
-//        y = 0;
-//        z = 0;
-//        isPosition = 1;
         vector[0] = 0;
         vector[1] = 0;
         vector[2] = 0;
@@ -15,12 +11,29 @@ Vertex :: Vertex ()
 
 Vertex :: Vertex (float x, float y, float z)
     {
-//        this->x = x;
-//        this->y = y;
-//        this->z = z;
-//        this->isPosition = 1;
         vector[0] = x;
         vector[1] = y;
         vector[2] = z;
         vector[3] = 1;
     }
+
+void Vertex :: vertexFromQString(QString input)
+{
+    QStringList coord = input.split(' ', QString::SkipEmptyParts);
+    for (int iterator = 0; iterator < 3; iterator++)
+    {
+        vector[iterator] = coord[iterator].toFloat();
+    }
+}
+
+QString Vertex :: vertexToQString()
+{
+    QString result = "";
+    for (int iterator = 0; iterator < 4; iterator++)
+    {
+        result += QString::number(vector[iterator]) + " ";
+    }
+    result += "\n";
+
+    return result;
+}

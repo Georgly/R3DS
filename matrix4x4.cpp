@@ -52,18 +52,32 @@ Matrix4x4 Matrix4x4 :: multipleMatrixes(Matrix4x4 matrix1, Matrix4x4 matrix2)
     return *result;
 }
 
-void Matrix4x4 :: matrixQTextStream(QTextStream &matrixString)
+void Matrix4x4 :: matrixFromQTextStream(QTextStream &matrixString)
 {
     QString inputStr = matrixString.readAll();
     QStringList matrixRow = inputStr.split('\n');
     for( int iteratorRow = 0; iteratorRow < matrixRow.count(); iteratorRow++ )
     {
-        QStringList matrixColumn = matrixRow[iteratorRow].split(' ');
+        QStringList matrixColumn = matrixRow[iteratorRow].split(' ', QString::SkipEmptyParts);
         for ( int iteratorColumn = 0; iteratorColumn < matrixColumn.count(); iteratorColumn++ )
         {
             this->matrix[iteratorRow][iteratorColumn] = matrixColumn[iteratorColumn].toFloat();
         }
     }
+}
+
+QString Matrix4x4 :: matrixToQString()
+{
+    QString result = "";
+    for (int iteratorRow = 0; iteratorRow < 4; iteratorRow++)
+    {
+        for (int iteratorColumn = 0; iteratorColumn < 4; iteratorColumn++)
+        {
+            result += QString::number(matrix[iteratorRow][iteratorColumn]) + " ";
+        }
+        result += "\n";
+    }
+    return result;
 }
 
 Matrix4x4 Matrix4x4 :: translationMatrix(float addX, float addY, float addZ)
@@ -142,4 +156,8 @@ Matrix4x4 Matrix4x4 :: perspectiveFovRH(float v1, float p, float v2, float v3)
     result->matrix[3][2] = v2 * v3 / (v2 - v3);
 
     return *result;
+}
+
+const Matrix4x4 operator*(const Matrix4x4& left, const Matrix4x4& right) {
+    return Matrix4x4::multipleMatrixes(left, right);
 }
