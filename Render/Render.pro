@@ -37,7 +37,6 @@ SOURCES += \
     camera.cpp \
     testmatrix.cpp \
     testvector.cpp \
-    drawmodelviewer.cpp \
     viewport.cpp
 
 HEADERS += \
@@ -53,7 +52,6 @@ HEADERS += \
     camera.h \
     testmatrix.h \
     testvector.h \
-    drawmodelviewer.h \
     viewport.h
 
 FORMS += \

@@ -36,27 +36,23 @@ Matrix4x4 ModelView :: findTransformMatrix()
 
 void ModelView :: drawVertexModel(QPainter *painter)
 {
-//    int length = mesh->vertexModel.count();
-//    for (int iterator = 0; iterator < length; iterator++ )
-//    {
-//        mesh->vertexModel[iterator] = Matrix4x4::multipleMatrixVertex( findTransformMatrix(), mesh->vertexModel[iterator] );
-//        drawVertex(mesh->vertexModel[iterator]);
-//    }
-//    QPainter painter(drawArea);
-//    painter.setBrush(Qt::blue);
-//    painter.drawPoint(25, 25);
+    int length = mesh->vertexModel.count();
+    for (int iterator = 0; iterator < length; iterator++ )
+    {
+        mesh->vertexModel[iterator] = Matrix4x4::multipleMatrixVertex( findTransformMatrix(), mesh->vertexModel[iterator] );
+        drawVertex(mesh->vertexModel[iterator], painter);
+    }
 }
 
-//void ModelView :: setWidget(QWidget *widget)
-//{
-//    //drawArea = widget;
-//}
+void ModelView :: drawVertex(Vertex vertex, QPainter *painter)
+{
+    QPen pen;
+    pen.setWidth(2);
+    pen.setColor(Qt::blue);
+    painter->setPen(pen);
 
-//void ModelView :: drawVertex(Vertex vertex)
-//{
-//    QPainter painter;
-//    painter.drawPoint(vertex.vector[0], vertex.vector[1]);
-//}
+    painter->drawPoint(vertex.vector[0], vertex.vector[1]);
+}
 
 void ModelView::drawFaceModel(QPainter *painter)
 {
@@ -65,11 +61,5 @@ void ModelView::drawFaceModel(QPainter *painter)
 
 void ModelView::drawModel(QPainter *painter)
 {
-    QPen pen;
-    pen.setWidth(2);
-    pen.setColor(Qt::red);
-    painter->setPen(pen);
-
-    painter->drawPoint(25, 25);
-    painter->drawLine(13, 14, 20, 17);
+    drawVertexModel(painter);
 }

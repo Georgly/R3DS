@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "modelview.h"
 #include "QFileDialog"
+#include "modelview.h"
 #include "viewport.h"
 
 namespace Ui {
@@ -19,20 +19,22 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_openFileBt_clicked();
-
-    void on_drawModelBt_clicked();
-
-    void on_pushButton_clicked();
-
-    void on_testMatrixBt_clicked();
-
-    void on_testVectorBt_clicked();
+    void open();
+    bool save();
+    void testMatrix();
+    void testVector();
 
 private:
     Ui::MainWindow *ui;
     ModelView model;
-protected:
+    void createActions();
+    void createMenus();
+    QMenu *fileMenu;
+    QMenu *testMenu;
+    QAction *openAct;
+    QAction *saveAct;
+    QAction *matrixTestAct;
+    QAction *vectorTestAct;
 };
 
 #endif // MAINWINDOW_H

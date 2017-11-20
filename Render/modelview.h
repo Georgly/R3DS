@@ -27,8 +27,7 @@ public:
     Matrix4x4 findTransformMatrix();
     void drawVertexModel(QPainter *painter);
     void drawFaceModel(QPainter *painter);
-    //void setWidget(QWidget *widget);
-    //void drawVertex(Vertex vertex);
+    void drawVertex(Vertex vertex, QPainter *painter);
     void drawModel(QPainter *painter);
 };
 
