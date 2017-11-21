@@ -16,7 +16,8 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    ~MainWindow(); 
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void open();

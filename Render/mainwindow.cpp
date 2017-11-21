@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     createActions();
     createMenus();
-
     Viewport *viewport = new Viewport();
     ui->menuBar->addMenu(fileMenu);
     ui->menuBar->addMenu(testMenu);
@@ -81,4 +80,35 @@ void MainWindow::testVector()
 {
     TestVector tests;
     QTest::qExec(&tests);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    QPainter painter(this);
+    int deltaX =0, deltaY = 0;
+    switch (event->key())
+    {
+    case Qt::Key_Up:
+    {
+        deltaY += 15;
+        break;
+    }
+    case Qt::Key_Down:
+    {
+        deltaY -= 15;
+        break;
+    }
+    case Qt::Key_Left:
+    {
+        deltaX -= 15;
+        break;
+    }
+    case Qt::Key_Right:
+    {
+        deltaX += 15;
+        break;
+    }
+    }
+    model.moveModel(&painter, deltaX, deltaY);
+    update();
 }

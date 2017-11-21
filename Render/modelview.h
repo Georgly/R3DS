@@ -13,6 +13,8 @@ class ModelView
 private:
     Model *mesh = new Model();
     Camera *camera = new Camera();
+    int zoom = 3;
+    QVector<Vertex> vertexModel;
     //QWidget *drawArea;
 public:
     ModelView();
@@ -28,7 +30,10 @@ public:
     void drawVertexModel(QPainter *painter);
     void drawFaceModel(QPainter *painter);
     void drawVertex(Vertex vertex, QPainter *painter);
+    void drawFace(QPainter *painter, QList<int> indeces);
     void drawModel(QPainter *painter);
+    void scaleModel(QPainter *painter, int scale);
+    void moveModel(QPainter *painter, int deltaX, int deltaY);
 };
 
 #endif // MODELVIEW_H

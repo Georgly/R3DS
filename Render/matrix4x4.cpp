@@ -164,6 +164,7 @@ Matrix4x4 Matrix4x4 :: perspectiveFovRH(float v1, float p, float v2, float v3)
     return *result;
 }
 
-const Matrix4x4 operator*(const Matrix4x4& left, const Matrix4x4& right) {
+const Matrix4x4 operator*(const Matrix4x4& left, const Matrix4x4& right)
+{
     return Matrix4x4::multipleMatrixes(left, right);
 }

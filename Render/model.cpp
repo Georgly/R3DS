@@ -11,6 +11,10 @@
     {
         QString errStr = "";
         QString inputStr = parseFIle(fileName);
+        vertexModel.clear();
+        faceModel.clear();
+        normalVectorModel.clear();
+        textureCoordModel.clear();
         QTextStream* input = new QTextStream(&inputStr/*parseFIle(fileName)*/);
         errStr = importModel(*input);
         return errStr;

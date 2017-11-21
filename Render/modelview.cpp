@@ -29,7 +29,7 @@ Matrix4x4 ModelView :: findTransformMatrix()
 
     Matrix4x4 worldMatrix = Matrix4x4::translationMatrix(mesh->position->vector[0], mesh->position->vector[1], mesh->position->vector[2]) *
             Matrix4x4::rotationMatrix(mesh->rotation->vector[0], mesh->rotation->vector[1], mesh->rotation->vector[2]) *
-            Matrix4x4::scalingMatrix(1, 1, 1);
+            Matrix4x4::scalingMatrix(zoom, zoom, zoom);
 
     return projectionMatrix * viewMatrix * worldMatrix;
 }
@@ -37,17 +37,19 @@ Matrix4x4 ModelView :: findTransformMatrix()
 void ModelView :: drawVertexModel(QPainter *painter)
 {
     int length = mesh->vertexModel.count();
+    vertexModel = mesh->vertexModel;
+    //Vertex changedVertex;
     for (int iterator = 0; iterator < length; iterator++ )
     {
-        mesh->vertexModel[iterator] = Matrix4x4::multipleMatrixVertex( findTransformMatrix(), mesh->vertexModel[iterator] );
-        drawVertex(mesh->vertexModel[iterator], painter);
+        vertexModel[iterator] = Matrix4x4::multipleMatrixVertex( findTransformMatrix(), mesh->vertexModel[iterator] );
+        //drawVertex(vertexModel[iterator], painter);
     }
 }
 
 void ModelView :: drawVertex(Vertex vertex, QPainter *painter)
 {
     QPen pen;
-    pen.setWidth(2);
+    pen.setWidth(1);
     pen.setColor(Qt::blue);
     painter->setPen(pen);
 
@@ -56,10 +58,44 @@ void ModelView :: drawVertex(Vertex vertex, QPainter *painter)
 
 void ModelView::drawFaceModel(QPainter *painter)
 {
+    int length = mesh->faceModel.count();
+    for ( int iterator = 0; iterator < length; iterator++ )
+    {
+        drawFace(painter, mesh->faceModel[iterator].getVertex());
+    }
+}
 
+void ModelView::drawFace(QPainter *painter, QList<int> indeces)
+{
+    QPolygonF face;
+    for ( int iterator = 0; iterator < indeces.count(); iterator++ )
+    {
+        face << QPointF(vertexModel[indeces[iterator] - 1].vector[0],
+                vertexModel[indeces[iterator] - 1].vector[1]);
+    }
+    QPen pen;
+    pen.setWidth(1);
+    pen.setColor(Qt::blue);
+    painter->setPen(pen);
+
+    painter->drawPolygon(face, Qt::WindingFill);
 }
 
 void ModelView::drawModel(QPainter *painter)
 {
     drawVertexModel(painter);
+    drawFaceModel(painter);
+}
+
+void ModelView::scaleModel(QPainter *painter, int scale)
+{
+    zoom += scale;
+    drawModel(painter);
+}
+
+void ModelView::moveModel(QPainter *painter, int deltaX, int deltaY)
+{
+    mesh->position->vector[0] += deltaX;
+    mesh->position->vector[1] += deltaY;
+    drawModel(painter);
 }
