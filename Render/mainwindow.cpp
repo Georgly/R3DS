@@ -109,6 +109,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     }
     }
-    model.moveModel(&painter, deltaX, deltaY);
-    update();
+    //painter.begin(centralWidget());
+    model.moveModel(&painter, deltaX, deltaY, centralWidget()->height(), centralWidget()->width());
+    centralWidget()->update();
+    //painter.end();
 }

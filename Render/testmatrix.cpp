@@ -43,6 +43,7 @@ void TestMatrix :: matrixVectorMultipleTEst()
 {
     Matrix4x4 matrix;
     Vertex vertex;
+    Vertex *resultVertex = new Vertex();
     QString inputMatrix = "1 2 3 0\n"
                               "4 6 1 1\n"
                               "3 5 8 0\n"
@@ -50,7 +51,8 @@ void TestMatrix :: matrixVectorMultipleTEst()
     matrix.matrixFromQTextStream(inputMatrix);
     QString inputVertex = "5 -3 1";
     vertex.vertexFromQString(inputVertex);
-    QString result = Matrix4x4::multipleMatrixVertex(matrix, vertex).vertexToQString() ;
+    ;
+    QString result = Matrix4x4::multipleMatrixVertex(matrix, vertex).vertexToQString();
 
     QCOMPARE(QString(result), QString("2 4 8 1 "));
 }

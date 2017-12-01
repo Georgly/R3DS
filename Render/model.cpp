@@ -15,7 +15,7 @@
         faceModel.clear();
         normalVectorModel.clear();
         textureCoordModel.clear();
-        QTextStream* input = new QTextStream(&inputStr/*parseFIle(fileName)*/);
+        QTextStream* input = new QTextStream(&inputStr);
         errStr = importModel(*input);
         return errStr;
     }
@@ -26,7 +26,7 @@
         bool isErrorInInput = true;
         QString inputStr = inputStream.readAll();
 
-        QStringList fileStrList = inputStr.split('\n'/*, QString::SkipEmptyParts*/);
+        QStringList fileStrList = inputStr.split('\n');
         int length = fileStrList.count();
 
         for (int iterator = 0; iterator < length; iterator++)
@@ -95,12 +95,9 @@ QString Model :: parseFIle(QString fileName)
     }
     QTextStream* readFile = new QTextStream(&file);
     QString text = readFile->readAll();
-    //QTextStream* inputStream = new QTextStream(&text);
-        //model.importModel(inputStream);
-        //QString text = in.readAll();
-        //ui->textEdit->setText(text);
+
     file.close();
-    return text/*inputStream*/;
+    return text;
 }
 
     QString Model :: faceToString(Face face)
@@ -188,6 +185,7 @@ QString Model :: parseFIle(QString fileName)
                 vertexStr[2].toFloat(),
                 vertexStr[3].toFloat()
                 );
+        setMinMaxVertex(*vertex);
         vertexModel.push_back(*vertex);
 
         return true;
@@ -213,10 +211,18 @@ QString Model :: parseFIle(QString fileName)
         return true;
     }
 
-//    void Model :: createModel(Matrix4x4 transformMatrix)
-//    {
-//        for (int iterator = 0; iterator < vertexModel.count(); iterator++ )
-//        {
-//            vertexModel[iterator] = Matrix4x4::multipleMatrixVertex( transformMatrix, vertexModel[iterator] );
-//        }
-//    }
+void Model :: setMinMaxVertex(Vertex vertex)
+{
+    if (vertex.vector[0] < minVertex->vector[0])
+        minVertex->vector[0] = vertex.vector[0];
+    if (vertex.vector[1] < minVertex->vector[1])
+        minVertex->vector[1] = vertex.vector[1];
+    if (vertex.vector[2] < minVertex->vector[2])
+        minVertex->vector[2] = vertex.vector[2];
+    if (vertex.vector[0] > maxVertex->vector[0])
+        maxVertex->vector[0] = vertex.vector[0];
+    if (vertex.vector[1] > maxVertex->vector[1])
+        maxVertex->vector[1] = vertex.vector[1];
+    if (vertex.vector[2] > maxVertex->vector[2])
+        maxVertex->vector[2] = vertex.vector[2];
+}

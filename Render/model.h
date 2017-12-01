@@ -18,8 +18,10 @@ public:
     QVector<Face> faceModel;
     QVector<QString> fileStrList;
 
-    Vertex *position = new Vertex();
-    Vertex *rotation = new Vertex();
+    Vertex *position = new Vertex(0);
+    Vertex *rotation = new Vertex(0);
+    Vertex *minVertex = new Vertex( std::numeric_limits<float>::max() );
+    Vertex *maxVertex = new Vertex( -std::numeric_limits<float>::max() );
     Model();
     QString importModel(QString fileName);
     QString importModel(QTextStream& fileName);
@@ -35,6 +37,7 @@ private:
     bool addNewNormalVector(QStringList vertexStr, QString& errorStr);
     bool addNewVertex(QStringList vertexStr, QString& errorStr);
     bool isVertexCorrectFormat(QStringList vertexStr, QString& errorStr);
+    void setMinMaxVertex(Vertex vertex);
 };
 
 #endif // MODEL_H

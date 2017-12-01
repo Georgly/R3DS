@@ -9,6 +9,7 @@ public:
     float vector[4];// x, y, z, isPosition;
     Vertex();
     Vertex (float x, float y, float z);
+    Vertex (float coord);
     void vertexFromQString(QString input);
     QString vertexToQString();
 };

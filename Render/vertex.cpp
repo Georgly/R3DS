@@ -17,6 +17,14 @@ Vertex :: Vertex (float x, float y, float z)
         vector[3] = 1;
     }
 
+Vertex :: Vertex (float coord)
+{
+    vector[0] = coord;
+    vector[1] = coord;
+    vector[2] = coord;
+    vector[3] = 1;
+}
+
 void Vertex :: vertexFromQString(QString input)
 {
     QStringList coord = input.split(' ', QString::SkipEmptyParts);

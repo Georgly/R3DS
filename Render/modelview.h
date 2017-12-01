@@ -13,27 +13,25 @@ class ModelView
 private:
     Model *mesh = new Model();
     Camera *camera = new Camera();
-    int zoom = 3;
+    int zoom = 2;
     QVector<Vertex> vertexModel;
-    //QWidget *drawArea;
+    int drawAreaHeight = 1;
+    int drawAreaWidth = 1;
+    int typeOfProjection = 0;
 public:
     ModelView();
     QString importModel(QString fileName);
     QString importModel(QTextStream& fileName);
-    void exportModel();/*
-    Matrix4x4 translationMatrix(float addX, float addY, float addZ);
-    Matrix4x4 scalingMatrix(float scalingX, float scalingY, float scalingZ);
-    Matrix4x4 rotationMatrix(float xRotationAngle, float yRotationAngle, float zRotationAngle);
-    Matrix4x4 lookAtLH(Vertex position, Vertex target, Vertex unitY);
-    Matrix4x4 perspectiveFovRH(float v1, float p, float v2, float v3);*/
+    void exportModel();
     Matrix4x4 findTransformMatrix();
     void drawVertexModel(QPainter *painter);
     void drawFaceModel(QPainter *painter);
     void drawVertex(Vertex vertex, QPainter *painter);
     void drawFace(QPainter *painter, QList<int> indeces);
-    void drawModel(QPainter *painter);
-    void scaleModel(QPainter *painter, int scale);
-    void moveModel(QPainter *painter, int deltaX, int deltaY);
+    void drawModel(QPainter *painter, int widgetHeight, int widgetWidth);
+    void scaleModel(QPainter *painter, int scale, int widgetHeight, int widgetWidth);
+    void moveModel(QPainter *painter, int deltaX, int deltaY, int widgetHeight, int widgetWidth);
+    //void setSettings();//TODO
 };
 
 #endif // MODELVIEW_H

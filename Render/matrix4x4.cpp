@@ -23,9 +23,9 @@ void Matrix4x4 :: Initialization()
     }
 }
 
-Vertex Matrix4x4 :: multipleMatrixVertex(Matrix4x4 matrix, Vertex vertex)
+Vertex Matrix4x4 :: multipleMatrixVertex(Matrix4x4 matrix, Vertex vertex/*, Vertex *out*/)
 {
-    Vertex *result = new Vertex();
+    Vertex *out = new Vertex();
     float halfResult;
     for ( int iteratorRow = 0; iteratorRow < 4; iteratorRow++ )
     {
@@ -35,10 +35,18 @@ Vertex Matrix4x4 :: multipleMatrixVertex(Matrix4x4 matrix, Vertex vertex)
             halfResult += matrix.matrix[iteratorRow][iteratorColumn] *
                     vertex.vector[iteratorColumn];
         }
-        result->vector[iteratorRow] = halfResult;
+        out->vector[iteratorRow] = halfResult;
     }
 
-    return *result;
+    if (out->vector[3] != 1)
+    {
+        out->vector[0] /= out->vector[3];
+        out->vector[1] /= out->vector[3];
+        out->vector[2] /= out->vector[3];
+        out->vector[3] /= out->vector[3];
+    }
+
+    return *out;
 }
 
 Matrix4x4 Matrix4x4 :: multipleMatrixes(Matrix4x4 matrix1, Matrix4x4 matrix2)
@@ -149,7 +157,7 @@ Matrix4x4 Matrix4x4 :: lookAtLH(Vertex position, Vertex target, Vertex unitY)
     return *pout;
 }
 
-Matrix4x4 Matrix4x4 :: perspectiveFovRH(float v1, float p, float v2, float v3)
+Matrix4x4 Matrix4x4 :: perspectiveFovRH(float v1, float p, float v2, float v3)//
 {
     float yScale = 1 / (float)qTan(/*(Math.PI * v1 / 180)*/v1 / 2);
     float xScale = yScale / p;
@@ -162,6 +170,62 @@ Matrix4x4 Matrix4x4 :: perspectiveFovRH(float v1, float p, float v2, float v3)
     result->matrix[3][2] = v2 * v3 / (v2 - v3);
 
     return *result;
+}
+
+Matrix4x4 Matrix4x4::perspectiveProjectionMatrix(float angleOfView, float imageAspectRatio, float n, float f)
+{
+    Matrix4x4 *out = new Matrix4x4();
+
+    float scale = tan(angleOfView * 0.5 * M_PI / 180) * n;
+    float r = imageAspectRatio * scale;
+    float l = -r;
+    float t = scale;
+    float b = -t;
+
+    out->matrix[0][0] = 2 * n / (r - l);
+    out->matrix[0][2] = (r + l) / (r - l);
+
+    out->matrix[1][1] = 2 * n / (t - b);
+    out->matrix[1][2] = (t + b) / (t - b);
+
+    out->matrix[2][2] = -(f + n) / (f - n);
+    out->matrix[2][3] = -2 * f * n / (f - n);
+
+    out->matrix[3][2] = -1;
+    out->matrix[3][3] = 0;
+
+    return *out;
+}
+
+Matrix4x4 Matrix4x4::orthographicProjectionMatrix(Vertex minWorld, Vertex maxWorld,
+                                             float imageAspectRatio,
+                                             float n, float f,
+                                             Matrix4x4 worldToCamera)
+{
+    Matrix4x4 *out = new Matrix4x4();
+    Vertex minCamera, maxCamera;
+    minCamera = multipleMatrixVertex(worldToCamera, minWorld);
+    maxCamera = multipleMatrixVertex(worldToCamera, maxWorld);
+
+    float maxx = std::max(fabs(minCamera.vector[0]), fabs(maxCamera.vector[0]));
+    float maxy = std::max(fabs(minCamera.vector[1]), fabs(maxCamera.vector[1]));
+
+    float max = (maxx < maxy ? maxy : maxx);
+    float r = max * imageAspectRatio, t = max;
+    float l = -r, b = -t;
+
+    out->matrix[0][0] = 2 / (r - l);
+    out->matrix[0][3] = -(r + l) / (r - l);
+
+    out->matrix[1][1] = 2 / (t - b);
+    out->matrix[1][3] = -(t + b) / (t - b);
+
+    out->matrix[2][2] = -2 / (f - n);
+    out->matrix[2][3] = -(f + n) / (f - n);
+
+    out->matrix[3][3] = 1;
+
+    return *out;
 }
 
 const Matrix4x4 operator*(const Matrix4x4& left, const Matrix4x4& right)
