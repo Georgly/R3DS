@@ -120,14 +120,14 @@ QString Model :: parseFIle(QString fileName)
         }
 
         bool isIndexOutOfRange = true;
-        for (int iterator = 1; iterator < vertexStr.count(); iterator++)
+        for (int iterator = 1; iterator < vertexStr.count(); iterator++)//TODO isIndexOutofRange work wrong
         {
             QStringList indexes = vertexStr[iterator].split('/');
             isIndexOutOfRange = face->addFace(indexes,
                                               vertexModel.count(),
                                               textureCoordModel.count(),
                                               normalVectorModel.count(),
-                                              errorStr);
+                                              errorStr);//check this function
             if(!isIndexOutOfRange)
             {
                 return false;

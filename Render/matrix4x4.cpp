@@ -115,26 +115,26 @@ Matrix4x4 Matrix4x4 :: scalingMatrix(float scalingX, float scalingY, float scali
 Matrix4x4 Matrix4x4 :: rotationMatrix(float xRotationAngle, float yRotationAngle, float zRotationAngle)
 {
     Matrix4x4 *rotationMatrix = new Matrix4x4();
-    float xRadians = qDegreesToRadians(xRotationAngle);
-    float yRadians = qDegreesToRadians(yRotationAngle);
-    float zRadians = qDegreesToRadians(zRotationAngle);
-    rotationMatrix->matrix[0][0] = qCos(zRadians) * qCos(yRadians);
-    rotationMatrix->matrix[1][0] = qSin(zRadians) * qCos(yRadians);
-    rotationMatrix->matrix[2][0] = 0 - qSin(yRadians);
-    rotationMatrix->matrix[0][1] = qCos(zRadians) * qSin(yRadians) * qSin(xRadians) -
-            qSin(zRadians) * qCos(xRadians);
-    rotationMatrix->matrix[1][1] = qSin(zRadians) * qSin(yRadians) * qSin(xRadians) +
-            qCos(zRadians) * qCos(xRadians);
-    rotationMatrix->matrix[2][1] = qCos(yRadians) * qSin(xRadians);
-    rotationMatrix->matrix[0][2] = qCos(zRadians) * qSin(yRadians) * qCos(xRadians) -
-            qSin(zRadians) * qSin(xRadians);
-    rotationMatrix->matrix[1][2] = qSin(zRadians) * qSin(yRadians) * qCos(xRadians) +
-            qCos(zRadians) * qSin(xRadians);
-    rotationMatrix->matrix[2][2] = qCos(yRadians) * qCos(xRadians);
+    //float xRotationAngle = qDegreesToRadians(xRotationAngle);
+    //float yRotationAngle = qDegreesToRadians(yRotationAngle);
+    //float zRotationAngle = qDegreesToRadians(zRotationAngle);
+    rotationMatrix->matrix[0][0] = qCos(zRotationAngle) * qCos(yRotationAngle);
+    rotationMatrix->matrix[1][0] = qSin(zRotationAngle) * qCos(yRotationAngle);
+    rotationMatrix->matrix[2][0] = 0 - qSin(yRotationAngle);
+    rotationMatrix->matrix[0][1] = qCos(zRotationAngle) * qSin(yRotationAngle) * qSin(xRotationAngle) -
+            qSin(zRotationAngle) * qCos(xRotationAngle);
+    rotationMatrix->matrix[1][1] = qSin(zRotationAngle) * qSin(yRotationAngle) * qSin(xRotationAngle) +
+            qCos(zRotationAngle) * qCos(xRotationAngle);
+    rotationMatrix->matrix[2][1] = qCos(yRotationAngle) * qSin(xRotationAngle);
+    rotationMatrix->matrix[0][2] = qCos(zRotationAngle) * qSin(yRotationAngle) * qCos(xRotationAngle) -
+            qSin(zRotationAngle) * qSin(xRotationAngle);
+    rotationMatrix->matrix[1][2] = qSin(zRotationAngle) * qSin(yRotationAngle) * qCos(xRotationAngle) +
+            qCos(zRotationAngle) * qSin(xRotationAngle);
+    rotationMatrix->matrix[2][2] = qCos(yRotationAngle) * qCos(xRotationAngle);
     return *rotationMatrix;
 }
 
-Matrix4x4 Matrix4x4 :: lookAtLH(Vertex position, Vertex target, Vertex unitY)
+Matrix4x4 Matrix4x4 :: lookAt(Vertex position, Vertex target, Vertex unitY)
 {
     Vertex rightn, upn, vec;
     Matrix4x4 *pout = new Matrix4x4();
@@ -143,17 +143,17 @@ Matrix4x4 Matrix4x4 :: lookAtLH(Vertex position, Vertex target, Vertex unitY)
     rightn = Vector3::Normalize(Vector3::Cross(unitY, vec));
     upn = Vector3::Normalize(Vector3::Cross(vec, Vector3::Cross(unitY, vec)));
     pout->matrix[0][0] = rightn.vector[0];
-    pout->matrix[1][0] = rightn.vector[1];
-    pout->matrix[2][0] = rightn.vector[2];
-    pout->matrix[3][0] = -Vector3::Dot(rightn, position);
-    pout->matrix[0][1] = upn.vector[0];
+    pout->matrix[0][1] = rightn.vector[1];
+    pout->matrix[0][2] = rightn.vector[2];
+    pout->matrix[0][3] = -Vector3::Dot(rightn, position);
+    pout->matrix[1][0] = upn.vector[0];
     pout->matrix[1][1] = upn.vector[1];
-    pout->matrix[2][1] = upn.vector[2];
-    pout->matrix[3][1] = -Vector3::Dot(upn, position);
-    pout->matrix[0][2] = vec.vector[0];
-    pout->matrix[1][2] = vec.vector[1];
+    pout->matrix[1][2] = upn.vector[2];
+    pout->matrix[1][3] = -Vector3::Dot(upn, position);
+    pout->matrix[2][0] = vec.vector[0];
+    pout->matrix[2][1] = vec.vector[1];
     pout->matrix[2][2] = vec.vector[2];
-    pout->matrix[3][2] = -Vector3::Dot(vec, position);
+    pout->matrix[2][3] = -Vector3::Dot(vec, position);
     return *pout;
 }
 

@@ -21,7 +21,7 @@ public:
     static Matrix4x4 translationMatrix(float addX, float addY, float addZ);
     static Matrix4x4 scalingMatrix(float scalingX, float scalingY, float scalingZ);
     static Matrix4x4 rotationMatrix(float xRotationAngle, float yRotationAngle, float zRotationAngle);
-    static Matrix4x4 lookAtLH(Vertex position, Vertex target, Vertex unitY);
+    static Matrix4x4 lookAt(Vertex position, Vertex target, Vertex unitY);
     static Matrix4x4 perspectiveFovRH(float v1, float p, float v2, float v3);// TODO ?remove?
 
     static Matrix4x4 perspectiveProjectionMatrix(float angleOfView,
